@@ -39,7 +39,7 @@ public class PKW : Fahrzeuge
 
     public override void SpecialInfosAusgeben()
     {
-        Console.WriteLine($"Türenanzahl {türenanzahl}");
+        Console.WriteLine($"Türenanzahl: {türenanzahl}");
     }
 }
 
@@ -67,7 +67,7 @@ public class LKW : Fahrzeuge
 
     public override void SpecialInfosAusgeben()
     {
-        Console.WriteLine($"Lade last {ladeLast} Tonnen");
-        Console.WriteLine($"Achsen {achsen}");
+        Console.WriteLine($"Lade last: {ladeLast} Tonnen");
+        Console.WriteLine($"Achsen: {achsen}");
     }
 }
