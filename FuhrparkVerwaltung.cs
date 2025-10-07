@@ -10,26 +10,26 @@ public class FuhrparkVerwaltung
         while(true)
         {
           Console.WriteLine("Welcome to Fuhrpark verwaltung");
-          Console.WriteLine("Was wollen sie machen: \n 1. Fahrzeug Hinzufügen \n 2. Fahrzeug Anzeigen lassen \n 3. Fahrzeug nach kennzeichen Löschen \n 0. Fuhrpark schließen ");
+          Console.WriteLine("Was wollen sie machen: \n 1. Fahrzeug Hinzufügen \n 2. Fahrzeug Anzeigen lassen \n 3. Fahrzeug nach Kennzeichen Löschen \n 0. Fuhrpark schließen ");
           Console.WriteLine("Nummer eingeben:");
-          String number = Console.ReadLine();
-          switch (number)
+            ConsoleKey key = Console.ReadKey().Key;
+          switch (key)
           {
-              case "1":
+                case ConsoleKey.D1:
                   Console.WriteLine("Fahrzeug Hinzufügen");
                   Fuhrpark.instance.AddFahrzeug();
                   break;
-              case "2":
+                case ConsoleKey.D2:
                   Console.WriteLine("Fahrzeuge Anzeigen");
                   Fuhrpark.instance.FahrzeugeAnzeigen();
                   break;
-              case "3":
+                case ConsoleKey.D3:
                   Console.Clear();
                   Console.WriteLine("Fahrzeug nach Kennzeichen Löschen ");
                   Fuhrpark.instance.FahzeugNachKennzeichenLöschen(Helper_functions.ReadStringWrite("Kennzeichen zum Löschen Angeben:"));
                   break;
 
-                case "0":
+                case ConsoleKey.D0:
                     return;
               default:
                   Console.WriteLine("Fahrzeug verwaltung 5");
@@ -52,17 +52,33 @@ public class Fuhrpark
     public void AddFahrzeug()
     {
         Console.Clear();
-        string fahrzeugType = Helper_functions.ReadStringWrite("Nummer des FahrzeugTypes: \n 1.PKW \n 2.LKW");
+        Console.WriteLine("Nummer des FahrzeugTypes: \n 1.PKW \n 2.LKW");
+        ConsoleKey key = Console.ReadKey(true).Key;
+        string fahrzeugType;
+        switch (key)
+        {
+            case ConsoleKey.D1:
+                fahrzeugType = "PKW";
+                break;
+            case ConsoleKey.D2:
+                fahrzeugType = "LKW";
+                break;
+            default:
+                fahrzeugType = "PKW";
+                break;
+        }
         Console.Clear();
         switch (fahrzeugType)
         {
-            case "1":
+            case "PKW":
                 PKW newPKW = new PKW();
+                newPKW.fahrzeugTyp = "PKW";
                 newPKW.Init();
                 fahrzeugListe.Add(newPKW);
                 break;
-            case "2":
+            case "LKW":
                 LKW newLKW = new LKW();
+                newLKW.fahrzeugTyp = "LKW";
                 newLKW.Init();
                 fahrzeugListe.Add(newLKW);
                 break;
@@ -78,16 +94,16 @@ public class Fuhrpark
     {
         Console.Clear();
         Helper_functions.Write($"Anzahl der Fahrzeuge. {fahrzeugListe.Count}");
-        foreach (Fahrzeuge Fahrzeug in fahrzeugListe)
+        foreach (Fahrzeuge fahrzeug in fahrzeugListe)
         {
             Console.WriteLine("-------------------------");
-            Console.WriteLine($"Fahrzeugtype: {Fahrzeug.GetType().ToString().Replace("fuhrpark.", "")}");
-            Console.WriteLine($"Model: {Fahrzeug.modell}");
-            Console.WriteLine($"Hersteller: {Fahrzeug.hersteller}");
-            Console.WriteLine($"FahrzeugNummer: {Fahrzeug.fahrzeugNummer}");
-            Console.WriteLine($"Kennzeichen: {Fahrzeug.kennzeichen}");
-            Console.WriteLine($"Baujahr: {Fahrzeug.baujahr}");
-            Fahrzeug.SpecialInfosAusgeben();
+            Console.WriteLine($"Fahrzeugtype: {fahrzeug.fahrzeugTyp}");
+            Console.WriteLine($"Model: {fahrzeug.modell}");
+            Console.WriteLine($"Hersteller: {fahrzeug.hersteller}");
+            Console.WriteLine($"FahrzeugNummer: {fahrzeug.fahrzeugNummer}");
+            Console.WriteLine($"Kennzeichen: {fahrzeug.kennzeichen}");
+            Console.WriteLine($"Baujahr: {fahrzeug.baujahr}");
+            fahrzeug.SpecialInfosAusgeben();
         }
         Console.WriteLine("-------------------------");
         Helper_functions.ReadStringWrite("press enter to exit");

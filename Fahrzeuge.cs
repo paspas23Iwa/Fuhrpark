@@ -10,6 +10,7 @@ public class Fahrzeuge
     public String hersteller { get; set; }
     public String modell { get; set; }
     public int baujahr { get; set; }
+    public string fahrzeugTyp { get; set; }
 
     public Fahrzeuge()
     {
@@ -57,7 +58,7 @@ public class PKW : Fahrzeuge
     public void Init()
     {
         base.Init();
-        Helper_functions.Write("Anzahl der PKW Türen");
+        Helper_functions.Write("Anzahl der PKW Türen:");
         türenanzahl = Helper_functions.ReadInteger();
     }
 
@@ -80,9 +81,9 @@ public class LKW : Fahrzeuge
     public void Init()
     {
         base.Init();
-        Helper_functions.Write("LKW Lade last in Tonnen");
+        Helper_functions.Write("LKW Ladelast in Tonnen:");
         ladeLast = Helper_functions.ReadInteger();
-        Helper_functions.Write("LKW Achsen");
+        Helper_functions.Write("LKW Achsen Anzahl:");
         while (true)
         {
             int achsenTemp = Helper_functions.ReadInteger();
