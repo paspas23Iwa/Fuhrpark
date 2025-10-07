@@ -5,6 +5,8 @@ public class FuhrparkVerwaltung
     public static void Main(string[] args)
     {
         Fuhrpark logiTrans = new Fuhrpark();
+
+        logiTrans.fahrzeugListe = JSONLoader.Load();
         while(true)
         {
           Console.WriteLine("Welcome to Fuhrpark verwaltung");
@@ -48,11 +50,13 @@ public class Fuhrpark
         {
             case "1":
                 PKW newPKW = new PKW();
+                newPKW.Init();
                 fahrzeugListe.Add(newPKW);
                 Console.WriteLine("PKW Added1");
                 break;
             case "2":
                 LKW newLKW = new LKW();
+                newLKW.Init();
                 fahrzeugListe.Add(newLKW);
                 break;
             default:
@@ -60,6 +64,7 @@ public class Fuhrpark
                 break;
         }
         Console.WriteLine($"FahrzeugCount {fahrzeugListe.Count}");
+        JSONLoader.Save(fahrzeugListe);
     }
 
     public void FahrzeugeAnzeigen()
@@ -102,8 +107,7 @@ public class Fuhrpark
             Console.WriteLine($"Es wurde kein Fahrzeug mit dem Kennzeichen {kennzeichen} gefunden");
         }
 
+        JSONLoader.Save(fahrzeugListe);
         Helper_functions.ReadStringWrite("press enter to exit");
-
-
     }
 }
