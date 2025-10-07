@@ -13,9 +13,6 @@ namespace fuhrpark
         static string filepath = Path.Combine(AppContext.BaseDirectory, "fuhrpark.json");
         public static void Save(List<Fahrzeuge> _fahrzeugeToSave)
         {
-
-            Console.WriteLine($"Saving to {filepath}");
-
             string jsonString = JsonConvert.SerializeObject(_fahrzeugeToSave, Formatting.Indented);
 
             if (!File.Exists(filepath))

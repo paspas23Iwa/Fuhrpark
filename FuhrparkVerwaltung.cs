@@ -10,7 +10,7 @@ public class FuhrparkVerwaltung
         while(true)
         {
           Console.WriteLine("Welcome to Fuhrpark verwaltung");
-          Console.WriteLine("Was wollen sie machen: \n 1. Fahrzeug Hinzufügen \n 2. Fahrzeug Anzeigen lassen \n 3. Fahrzeug nach kennzeichen Löschen \n ");
+          Console.WriteLine("Was wollen sie machen: \n 1. Fahrzeug Hinzufügen \n 2. Fahrzeug Anzeigen lassen \n 3. Fahrzeug nach kennzeichen Löschen \n 0. Fuhrpark schließen ");
           Console.WriteLine("Nummer eingeben:");
           String number = Console.ReadLine();
           switch (number)
@@ -28,6 +28,9 @@ public class FuhrparkVerwaltung
                   Console.WriteLine("Fahrzeug nach Kennzeichen Löschen ");
                   Fuhrpark.instance.FahzeugNachKennzeichenLöschen(Helper_functions.ReadStringWrite("Kennzeichen zum Löschen Angeben:"));
                   break;
+
+                case "0":
+                    return;
               default:
                   Console.WriteLine("Fahrzeug verwaltung 5");
                   break;
@@ -45,7 +48,6 @@ public class Fuhrpark
     static Fuhrpark()
     {
         instance = new Fuhrpark();
-        Console.WriteLine("ok");
     }
     public void AddFahrzeug()
     {
@@ -58,7 +60,6 @@ public class Fuhrpark
                 PKW newPKW = new PKW();
                 newPKW.Init();
                 fahrzeugListe.Add(newPKW);
-                Console.WriteLine("PKW Added1");
                 break;
             case "2":
                 LKW newLKW = new LKW();

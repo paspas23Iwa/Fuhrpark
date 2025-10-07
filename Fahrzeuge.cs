@@ -22,7 +22,6 @@ public class Fahrzeuge
         bool existsAlready = true;
         while (existsAlready)
         {
-            Console.WriteLine("ok");
             kennzeichen = Helper_functions.ReadStringWrite("Kennzeichen:");
 
             if (Fuhrpark.instance.fahrzeugListe.Where(x => x.kennzeichen == kennzeichen).ToList().Count > 0)
