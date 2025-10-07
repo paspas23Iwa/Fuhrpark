@@ -18,7 +18,23 @@ public class Fahrzeuge
     {
         Console.WriteLine("Fahrzeugnummer:");
         fahrzeugNummer = Helper_functions.ReadInteger();
-        kennzeichen = Helper_functions.ReadStringWrite("Kennzeichen:");
+
+        bool existsAlready = true;
+        while (existsAlready)
+        {
+            Console.WriteLine("ok");
+            kennzeichen = Helper_functions.ReadStringWrite("Kennzeichen:");
+
+            if (Fuhrpark.instance.fahrzeugListe.Where(x => x.kennzeichen == kennzeichen).ToList().Count > 0)
+            {
+                existsAlready = true;
+                Console.WriteLine("Das Kennzeichen existiert schon.");
+            }
+            else
+            {
+                existsAlready = false;
+            }
+        }
         hersteller = Helper_functions.ReadStringWrite("Hersteller:");
         modell = Helper_functions.ReadStringWrite("Modell:");
         Helper_functions.Write("Baujahr");
@@ -59,7 +75,7 @@ public class LKW : Fahrzeuge
 
     public LKW()
     {
-        
+
     }
 
     public void Init()
@@ -77,7 +93,7 @@ public class LKW : Fahrzeuge
                 break;
             }
             Helper_functions.Write("LKW Achsen Ungültig bittde Gültige Anzahl angeben (>= 2)");
-        } 
+        }
     }
     public override void SpecialInfosAusgeben()
     {

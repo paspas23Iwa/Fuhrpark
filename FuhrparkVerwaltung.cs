@@ -1,12 +1,12 @@
+using System.Runtime.CompilerServices;
+
 namespace fuhrpark;
 
 public class FuhrparkVerwaltung
 {
     public static void Main(string[] args)
     {
-        Fuhrpark logiTrans = new Fuhrpark();
-
-        logiTrans.fahrzeugListe = JSONLoader.Load();
+        Fuhrpark.instance.fahrzeugListe = JSONLoader.Load();
         while(true)
         {
           Console.WriteLine("Welcome to Fuhrpark verwaltung");
@@ -17,16 +17,16 @@ public class FuhrparkVerwaltung
           {
               case "1":
                   Console.WriteLine("Fahrzeug Hinzufügen");
-                  logiTrans.AddFahrzeug();
+                  Fuhrpark.instance.AddFahrzeug();
                   break;
               case "2":
                   Console.WriteLine("Fahrzeuge Anzeigen");
-                  logiTrans.FahrzeugeAnzeigen();
+                  Fuhrpark.instance.FahrzeugeAnzeigen();
                   break;
               case "3":
                   Console.Clear();
                   Console.WriteLine("Fahrzeug nach Kennzeichen Löschen ");
-                  logiTrans.FahzeugNachKennzeichenLöschen(Helper_functions.ReadStringWrite("Kennzeichen zum Löschen Angeben:"));
+                  Fuhrpark.instance.FahzeugNachKennzeichenLöschen(Helper_functions.ReadStringWrite("Kennzeichen zum Löschen Angeben:"));
                   break;
               default:
                   Console.WriteLine("Fahrzeug verwaltung 5");
@@ -40,7 +40,13 @@ public class FuhrparkVerwaltung
 public class Fuhrpark
 {
     public List<Fahrzeuge> fahrzeugListe = new List<Fahrzeuge>();
+    public static Fuhrpark instance;
 
+    static Fuhrpark()
+    {
+        instance = new Fuhrpark();
+        Console.WriteLine("ok");
+    }
     public void AddFahrzeug()
     {
         Console.Clear();
