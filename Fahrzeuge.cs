@@ -43,7 +43,6 @@ public class Fahrzeuge
     }
     public virtual void SpecialInfosAusgeben()
     {
-        Console.WriteLine("Special");
     }
 }
 

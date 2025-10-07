@@ -7,35 +7,120 @@ public class FuhrparkVerwaltung
     public static void Main(string[] args)
     {
         Fuhrpark.instance.fahrzeugListe = JSONLoader.Load();
-        while(true)
+
+        DrawMenu();
+        while (true)
         {
-          Console.WriteLine("Welcome to Fuhrpark verwaltung");
-          Console.WriteLine("Was wollen sie machen: \n 1. Fahrzeug Hinzufügen \n 2. Fahrzeug Anzeigen lassen \n 3. Fahrzeug nach Kennzeichen Löschen \n 0. Fuhrpark schließen ");
-          Console.WriteLine("Nummer eingeben:");
+            Console.WriteLine("Welcome to Fuhrpark verwaltung");
+            Console.WriteLine("Was wollen sie machen: \n 1. Fahrzeug Hinzufügen \n 2. Fahrzeug Anzeigen lassen \n 3. Fahrzeug nach Kennzeichen Löschen \n 0. Fuhrpark schließen ");
+            Console.WriteLine("Nummer eingeben:");
             ConsoleKey key = Console.ReadKey().Key;
-          switch (key)
-          {
+            switch (key)
+            {
                 case ConsoleKey.D1:
-                  Console.WriteLine("Fahrzeug Hinzufügen");
-                  Fuhrpark.instance.AddFahrzeug();
-                  break;
+                    Console.WriteLine("Fahrzeug Hinzufügen");
+                    Fuhrpark.instance.AddFahrzeug();
+                    break;
                 case ConsoleKey.D2:
-                  Console.WriteLine("Fahrzeuge Anzeigen");
-                  Fuhrpark.instance.FahrzeugeAnzeigen();
-                  break;
+                    Console.WriteLine("Fahrzeuge Anzeigen");
+                    Fuhrpark.instance.FahrzeugeAnzeigen();
+                    break;
                 case ConsoleKey.D3:
-                  Console.Clear();
-                  Console.WriteLine("Fahrzeug nach Kennzeichen Löschen ");
-                  Fuhrpark.instance.FahzeugNachKennzeichenLöschen(Helper_functions.ReadStringWrite("Kennzeichen zum Löschen Angeben:"));
-                  break;
+                    Console.Clear();
+                    Console.WriteLine("Fahrzeug nach Kennzeichen Löschen ");
+                    Fuhrpark.instance.FahrzeugNachKennzeichenLöschen(Helper_functions.ReadStringWrite("Kennzeichen zum Löschen Angeben:"));
+                    break;
 
                 case ConsoleKey.D0:
                     return;
-              default:
-                  Console.WriteLine("Fahrzeug verwaltung 5");
-                  break;
-          }
-          Console.Clear();
+                default:
+                    Console.WriteLine("Fahrzeug verwaltung 5");
+                    break;
+            }
+            Console.Clear();
+        }
+    }
+
+    static int selectedMenu = 0;
+    public static void DrawMenu()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Willkommen bei der Fuhrparkverwaltung");
+            Console.WriteLine("Was wollen sie machen? \n");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == selectedMenu)
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                else
+                    Console.BackgroundColor = ConsoleColor.Black;
+
+                switch (i)
+                {
+                    case 0:
+                        Console.WriteLine("Fahrzeug hinzufügen.");
+                        break;
+                    case 1:
+                        Console.WriteLine("Fahrzeuge anzeigen.");
+                        break;
+                    case 2:
+                        Console.WriteLine("Fahrzeug anhand von Kennzeichen löschen.");
+                        break;
+                    case 3:
+                        Console.WriteLine("Fuhrpark verlassen.");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+
+            ConsoleKey key = Console.ReadKey(true).Key;
+
+            switch (key)
+            {
+                case ConsoleKey.UpArrow:
+                    selectedMenu--;
+                    break;
+
+                case ConsoleKey.DownArrow:
+                    selectedMenu++;
+                    break;
+                case ConsoleKey.Enter:
+                    Console.WriteLine("entering " + selectedMenu);
+                    switch (selectedMenu)
+                    {
+                        case 0:
+                            Console.WriteLine("Fahrzeug Hinzufügen");
+                            Fuhrpark.instance.AddFahrzeug();
+                            break;
+                        case 1:
+                            Console.WriteLine("Fahrzeuge Anzeigen");
+                            Fuhrpark.instance.FahrzeugeAnzeigen();
+                            break;
+                        case 2:
+                            Console.Clear();
+                            Console.WriteLine("Fahrzeug nach Kennzeichen Löschen ");
+                            Fuhrpark.instance.FahrzeugNachKennzeichenLöschen(Helper_functions.ReadStringWrite("Kennzeichen zum Löschen Angeben:"));
+                            break;
+                        case 3:
+                            Environment.Exit(0);
+                            break;
+
+
+                        default:
+                            break;
+                    }
+                    break;
+            }
+
+            if (selectedMenu < 0)
+                selectedMenu = 3;
+            else if (selectedMenu > 3)
+                selectedMenu = 0;
         }
     }
 }
@@ -109,17 +194,17 @@ public class Fuhrpark
         Helper_functions.ReadStringWrite("press enter to exit");
     }
 
-    public void FahzeugNachKennzeichenLöschen(string kennzeichen)
+    public void FahrzeugNachKennzeichenLöschen(string kennzeichen)
     {
         Console.Clear();
         bool removed = false;
-        
+
         foreach (var fahrzeug in fahrzeugListe)
         {
             if (kennzeichen == fahrzeug.kennzeichen)
             {
                 removed = true;
-                Console.WriteLine($"{fahrzeug} mit dem kennzeichen {fahrzeug.kennzeichen} wurde Entfernt");
+                Console.WriteLine($"{fahrzeug.fahrzeugTyp} mit dem Kennzeichen {fahrzeug.kennzeichen} wurde Entfernt");
                 fahrzeugListe.Remove(fahrzeug);
                 break;
             }

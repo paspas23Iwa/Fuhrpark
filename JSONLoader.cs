@@ -13,7 +13,10 @@ namespace fuhrpark
         static string filepath = Path.Combine(AppContext.BaseDirectory, "fuhrpark.json");
         public static void Save(List<Fahrzeuge> _fahrzeugeToSave)
         {
-            string jsonString = JsonConvert.SerializeObject(_fahrzeugeToSave, Formatting.Indented);
+            string jsonString = JsonConvert.SerializeObject(_fahrzeugeToSave, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
 
             if (!File.Exists(filepath))
                 File.Create(filepath).Close();
@@ -38,7 +41,10 @@ namespace fuhrpark
             try
             {
                 string jsonString = File.ReadAllText(filepath);
-                fahrzeuge = JsonConvert.DeserializeObject<List<Fahrzeuge>>(jsonString);
+                fahrzeuge = JsonConvert.DeserializeObject<List<Fahrzeuge>>(jsonString, new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                });
 
                 if (fahrzeuge == null)
                     fahrzeuge = new List<Fahrzeuge>();
