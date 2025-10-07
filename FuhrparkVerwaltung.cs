@@ -8,7 +8,7 @@ public class FuhrparkVerwaltung
     {
         Fuhrpark.instance.fahrzeugListe = JSONLoader.Load();
 
-        DrawMenu();
+        DrawMenu(); //Auskommentieren um die GUI zu entfernen
         while (true)
         {
             Console.WriteLine("Welcome to Fuhrpark verwaltung");
@@ -34,7 +34,6 @@ public class FuhrparkVerwaltung
                 case ConsoleKey.D0:
                     return;
                 default:
-                    Console.WriteLine("Fahrzeug verwaltung 5");
                     break;
             }
             Console.Clear();
@@ -90,20 +89,16 @@ public class FuhrparkVerwaltung
                     selectedMenu++;
                     break;
                 case ConsoleKey.Enter:
-                    Console.WriteLine("entering " + selectedMenu);
                     switch (selectedMenu)
                     {
                         case 0:
-                            Console.WriteLine("Fahrzeug Hinzufügen");
                             Fuhrpark.instance.AddFahrzeug();
                             break;
                         case 1:
-                            Console.WriteLine("Fahrzeuge Anzeigen");
                             Fuhrpark.instance.FahrzeugeAnzeigen();
                             break;
                         case 2:
                             Console.Clear();
-                            Console.WriteLine("Fahrzeug nach Kennzeichen Löschen ");
                             Fuhrpark.instance.FahrzeugNachKennzeichenLöschen(Helper_functions.ReadStringWrite("Kennzeichen zum Löschen Angeben:"));
                             break;
                         case 3:
@@ -136,21 +131,54 @@ public class Fuhrpark
     }
     public void AddFahrzeug()
     {
-        Console.Clear();
-        Console.WriteLine("Nummer des FahrzeugTypes: \n 1.PKW \n 2.LKW");
-        ConsoleKey key = Console.ReadKey(true).Key;
-        string fahrzeugType;
-        switch (key)
+        bool isTypeSelected = false;
+        int selectedType = 0;
+        string fahrzeugType = "";
+        while (!isTypeSelected)
         {
-            case ConsoleKey.D1:
-                fahrzeugType = "PKW";
-                break;
-            case ConsoleKey.D2:
-                fahrzeugType = "LKW";
-                break;
-            default:
-                fahrzeugType = "PKW";
-                break;
+            Console.Clear();
+            Console.WriteLine("Um welchen Fahrzeugtyp handelt es sich?\n");
+            for (int i = 0; i < 2; i++)
+            {
+                if (i == selectedType)
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                else
+                    Console.BackgroundColor = ConsoleColor.Black;
+
+                switch (i)
+                {
+                    case 0:
+                        Console.WriteLine("PKW");
+                        break;
+                    case 1:
+                        Console.WriteLine("LKW");
+                        break;
+                }
+            }
+            ConsoleKey key = Console.ReadKey(true).Key;
+
+            switch (key)
+            {
+                case ConsoleKey.UpArrow:
+                    selectedType--;
+                    break;
+
+                case ConsoleKey.DownArrow:
+                    selectedType++;
+                    break;
+                case ConsoleKey.Enter:
+                    if (selectedType == 1)
+                        fahrzeugType = "LKW";
+                    else
+                        fahrzeugType = "PKW";
+                    isTypeSelected = true;
+                    break;
+            }
+            if (selectedType < 0)
+                selectedType = 1;
+            else if (selectedType > 1)
+                selectedType = 0;
+            Console.BackgroundColor = ConsoleColor.Black;
         }
         Console.Clear();
         switch (fahrzeugType)
